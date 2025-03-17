@@ -16,6 +16,10 @@ import java.io.IOException;
  * Diese Klasse erstellt das Hauptfenster der Anwendung und initialisiert
  * die Benutzeroberfläche, einschließlich Menüleiste, Zoom-Funktionen,
  * Farbschieber und Bildanzeige.
+ * 
+ * Author: Fynn
+ * Datum: 17.03.2025
+ * Version: 1.0
  */
 
 public class Main extends JFrame {
@@ -73,10 +77,14 @@ public class Main extends JFrame {
         originalButton.addActionListener(new OriginalListener());
         menuBar.add(originalButton);
 
+        JButton resetColorButton = new JButton("Reset Color");
+        resetColorButton.addActionListener(new ResetColorListener());
+        menuBar.add(resetColorButton);
+
         // Create color sliders
-        redSlider = new JSlider(0, 255, 0);
-        greenSlider = new JSlider(0, 255, 0);
-        blueSlider = new JSlider(0, 255, 0);
+        redSlider = new JSlider(-255, 255, 0);
+        greenSlider = new JSlider(-255, 255, 0);
+        blueSlider = new JSlider(-255, 255, 0);
 
         redSlider.addChangeListener(new ColorSliderListener());
         greenSlider.addChangeListener(new ColorSliderListener());
@@ -175,6 +183,15 @@ public class Main extends JFrame {
         }
     }
 
+    private class ResetColorListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            redSlider.setValue(0);
+            greenSlider.setValue(0);
+            blueSlider.setValue(0);
+        }
+    }
+
     /**
      * Listener zum Umwandeln des Bildes in Graustufen.
      *
@@ -234,8 +251,11 @@ public class Main extends JFrame {
                 Color color = new Color(rgb, true);
 
                 int newRed = Math.min(255, color.getRed() + redValue);
+                newRed = Math.max(0, newRed);
                 int newGreen = Math.min(255, color.getGreen() + greenValue);
+                newGreen = Math.max(0, newGreen);
                 int newBlue = Math.min(255, color.getBlue() + blueValue);
+                newBlue = Math.max(0, newBlue);
 
                 Color newColor = new Color(newRed, newGreen, newBlue, color.getAlpha());
                 modifiedImage.setRGB(x, y, newColor.getRGB());
@@ -306,7 +326,6 @@ public class Main extends JFrame {
         SwingUtilities.invokeLater(() -> new Main());
     }
 
-    // Pixel class to store RGB values and position
     /**
      * Ein Record zur Speicherung der RGB-Werte und Position eines Pixels.
      *
