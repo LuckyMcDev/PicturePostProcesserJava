@@ -9,6 +9,15 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
+
+/**
+ * Hauptklasse der Anwendung zum Anzeigen und Bearbeiten von PNG-Bildern.
+ *
+ * Diese Klasse erstellt das Hauptfenster der Anwendung und initialisiert
+ * die Benutzeroberfläche, einschließlich Menüleiste, Zoom-Funktionen,
+ * Farbschieber und Bildanzeige.
+ */
+
 public class Main extends JFrame {
     private JLabel imageLabel;
     private JScrollPane scrollPane;
@@ -25,6 +34,14 @@ public class Main extends JFrame {
     public Main() {
         initializeUI();
     }
+
+    /**
+     * Initialisiert die Benutzeroberfläche der Anwendung.
+     * 
+     * Beschreibt alle Parameter für die Anwending, wie Name grösse Usw.
+     * 
+     * Ausserdem auch die Verschiedenen Buttons und Sliders und ihre Position.
+     */
 
     private void initializeUI() {
         setTitle("PNG Image Viewer");
@@ -88,6 +105,13 @@ public class Main extends JFrame {
         setVisible(true);
     }
 
+    /**
+     * Listener zum Öffnen eines PNG-Bildes.
+     *
+     * Diese Klasse implementiert den ActionListener, um auf das Drücken der
+     * "Open PNG"-Schaltfläche zu reagieren. Sie öffnet einen Dateiauswahldialog,
+     * um ein PNG-Bild auszuwählen und anzuzeigen.
+     */
     private class OpenImageListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -121,6 +145,13 @@ public class Main extends JFrame {
         }
     }
 
+    /**
+     * Listener zum Vergrößern des Bildes.
+     *
+     * Diese Klasse implementiert den ActionListener, um das Bild zu vergrößern,
+     * wenn die "Zoom In"-Schaltfläche gedrückt wird.
+     */
+
     private class ZoomInListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -129,6 +160,13 @@ public class Main extends JFrame {
         }
     }
 
+    /**
+     * Listener zum Verkleinern des Bildes.
+     *
+     * Diese Klasse implementiert den ActionListener, um das Bild zu verkleinern,
+     * wenn die "Zoom Out"-Schaltfläche gedrückt wird.
+     */
+
     private class ZoomOutListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -136,6 +174,13 @@ public class Main extends JFrame {
             updateZoomedImage();
         }
     }
+
+    /**
+     * Listener zum Umwandeln des Bildes in Graustufen.
+     *
+     * Diese Klasse implementiert den ActionListener, um das Bild in Graustufen
+     * umzuwandeln, wenn die "Grayscale"-Schaltfläche gedrückt wird.
+     */
 
     private class GrayscaleListener implements ActionListener {
         @Override
@@ -154,6 +199,13 @@ public class Main extends JFrame {
         }
     }
 
+    /**
+     * Listener für Farbschieber-Änderungen.
+     *
+     * Diese Klasse implementiert den ChangeListener, um Änderungen an den
+     * Farbschiebern zu erkennen und die Farbwerte des Bildes entsprechend
+     * anzupassen.
+     */
     private class ColorSliderListener implements ChangeListener {
         @Override
         public void stateChanged(ChangeEvent e) {
@@ -163,6 +215,12 @@ public class Main extends JFrame {
         }
     }
 
+    /**
+     * Passt die Farbwerte des Bildes basierend auf den Schieberwerten an.
+     *
+     * Diese Methode erstellt ein neues Bild, in dem die Farbwerte jedes Pixels
+     * basierend auf den aktuellen Werten der Farbschieber angepasst werden.
+     */
     private void applyColorAdjustments() {
         int redValue = redSlider.getValue();
         int greenValue = greenSlider.getValue();
@@ -249,39 +307,15 @@ public class Main extends JFrame {
     }
 
     // Pixel class to store RGB values and position
-    private static class Pixel {
-        private int red;
-        private int green;
-        private int blue;
-        private int x;
-        private int y;
-
-        public Pixel(int red, int green, int blue, int x, int y) {
-            this.red = red;
-            this.green = green;
-            this.blue = blue;
-            this.x = x;
-            this.y = y;
-        }
-
-        public int getRed() {
-            return red;
-        }
-
-        public int getGreen() {
-            return green;
-        }
-
-        public int getBlue() {
-            return blue;
-        }
-
-        public int getX() {
-            return x;
-        }
-
-        public int getY() {
-            return y;
-        }
+    /**
+     * Ein Record zur Speicherung der RGB-Werte und Position eines Pixels.
+     *
+     * @param red Der Rotwert des Pixels.
+     * @param green Der Grünwert des Pixels.
+     * @param blue Der Blauwert des Pixels.
+     * @param x Die x-Koordinate des Pixels.
+     * @param y Die y-Koordinate des Pixels.
+     */
+    public record Pixel(int red, int green, int blue, int x, int y) {
     }
 }
