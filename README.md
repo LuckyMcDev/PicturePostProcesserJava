@@ -1,0 +1,1 @@
+A small Project, that literally just modifies RGB Values of a given Image.
